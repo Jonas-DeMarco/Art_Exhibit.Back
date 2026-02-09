@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Art_Exhibit.Application/Art_Exhibit.Back.Application.csproj" />
+  <Project Path="Art_Exhibit.Back.Domain/Art_Exhibit.Back.Domain.csproj" />
+  <Project Path="Art_Exhibit.Back.Infrastructure/Art_Exhibit.Back.Infrastructure.csproj" />
+  <Project Path="Art_Exhibit.Back/Art_Exhibit.Back.API.csproj" />
+</Solution>
