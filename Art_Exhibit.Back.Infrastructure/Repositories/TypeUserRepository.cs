@@ -40,14 +40,15 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
             return await _context.TypeUsers.AsNoTracking().ToListAsync();
         }
 
-        public Task<TypeUser?> GetByIdAsync(int id)
+        public async Task<TypeUser?> GetByIdAsync(int id)
         {
-            return _context.TypeUsers.AsNoTracking().FirstOrDefaultAsync(tusr => tusr.ID == id);
+            return await _context.TypeUsers.AsNoTracking().FirstOrDefaultAsync(tusr => tusr.ID == id);
         }
 
-        public Task UpdateAsync(TypeUser TypeUser)
+        public async Task UpdateAsync(TypeUser TypeUser)
         {
-            throw new NotImplementedException();
+            _context.TypeUsers.Update(TypeUser);
+            await _context.SaveChangesAsync();
         }
     }
 }
