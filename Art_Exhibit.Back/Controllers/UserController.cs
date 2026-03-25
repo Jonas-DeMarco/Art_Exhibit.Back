@@ -28,6 +28,12 @@ namespace Art_Exhibit.Back.API.Controllers
         {
             return Ok(await _usersServices.GetUserByIdAsync(id));
         }
+        
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetUserByUsernameAsync(string username)
+        {
+            return Ok(await _usersServices.GetUserByUsernameAsync(username));
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateUsersDTO userDTO)
@@ -37,7 +43,7 @@ namespace Art_Exhibit.Back.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(UpdateUsersDTO userDTO)
+        public async Task<IActionResult> Put(UsersDTO userDTO)
         {
             await _usersServices.UpdateUserAsync(userDTO);
             return Ok(userDTO);
@@ -56,6 +62,14 @@ namespace Art_Exhibit.Back.API.Controllers
         {
            var typelist =  await _usersServices.GetTypeListAsync();
             return Ok(typelist);
+        }
+
+        [Route("/api/getartists")]
+        [HttpGet]
+        public async Task<IActionResult> GetArtists()
+        {
+            var artistlist = await _usersServices.GetArtistsListAsync();
+            return Ok(artistlist);
         }
 
         /*

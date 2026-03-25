@@ -2,6 +2,7 @@
 using Art_Exhibit.Back.Application.DTOs.Users;
 using Art_Exhibit.Back.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Art_Exhibit.Back.API.Controllers
 {
@@ -48,5 +49,14 @@ namespace Art_Exhibit.Back.API.Controllers
             await _oeuvresServices.DeleteOeuvreAsync(id);
             return Ok();
         }
+
+        [Route("/api/getcategories")]
+        [HttpGet]
+        public async Task<IActionResult> GetCategories()
+        {
+            return Ok(await _oeuvresServices.GetCategoriesAsync());
+        }
+
+        
     }
 }

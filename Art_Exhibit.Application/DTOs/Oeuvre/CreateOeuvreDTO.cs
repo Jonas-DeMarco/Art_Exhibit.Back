@@ -7,13 +7,9 @@ namespace Art_Exhibit.Back.Application.DTOs.Oeuvre
 {
     public class CreateOeuvreDTO
     {
-        public int Id { get; set; }
-        public Domain.Entities.Users Auteur { get; set; }
+        public string Auteur_username { get; set; }
 
         public string Categorie { get; set; }
-
-        public int Exemplaire { get; set; } = 1;
-        public int Nbre_exemplaire { get; set; } = 1;
         public string Titre { get; set; }
         public string Description { get; set; }
         public float Longueur { get; set; }

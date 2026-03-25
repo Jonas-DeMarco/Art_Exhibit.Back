@@ -63,12 +63,13 @@ namespace Art_Exhibit.Back.Application.Services
             return null;
             
         }
-        public async Task UpdateUserAsync(UpdateUsersDTO usersDTO)
+        public async Task UpdateUserAsync(UsersDTO usersDTO)
         {
             var user = await _repository.GetByIdAsync(usersDTO.Id);
+            var type = await _repository.GetTypeAsync(usersDTO.Type);
             if (user == null) throw new Exception("User not found");
             user.Id = usersDTO.Id;
-            user.Type = usersDTO.Type;
+            user.Type = type;
             user.Username = usersDTO.Username;
             user.Password = usersDTO.Password;
             user.Email = usersDTO.Email;
@@ -87,6 +88,24 @@ namespace Art_Exhibit.Back.Application.Services
                 typelist.Add(type.Description);   
             }
             return typelist;
+        }
+
+        public async Task<IEnumerable<string>> GetArtistsListAsync()
+        {
+            var artists = await _repository.GetAllArtistsAsync();
+            var artistlist = new List<string>();
+            foreach (var artist in artists)
+            {
+                artistlist.Add(artist.Username);
+            }
+            return artistlist;
+        }
+
+        public async Task<UsersDTO?> GetUserByUsernameAsync(string username)
+        {
+            var user = await _repository.GetByUsernameAsync(username);
+            if (user == null) return null;
+            return MapToDTO(user);
         }
     }
 }

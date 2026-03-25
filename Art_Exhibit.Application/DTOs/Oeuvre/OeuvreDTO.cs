@@ -8,9 +8,9 @@ namespace Art_Exhibit.Back.Application.DTOs.Oeuvre
     public class OeuvreDTO
     {
         public int Id { get; set; }
-        public Domain.Entities.Users Auteur { get; set; }
+        public string Auteur { get; set; }
 
-        public Categorie Categorie { get; set; }
+        public string Categorie { get; set; }
 
         public int Exemplaire { get; set; } = 1;
 
@@ -23,6 +23,6 @@ namespace Art_Exhibit.Back.Application.DTOs.Oeuvre
         public float Longueur { get; set; }
         public float Largeur { get; set; }
         public float Profondeur { get; set; }
-        public Statut Statut { get; set; }
+        public string Statut { get; set; }
     }
 }

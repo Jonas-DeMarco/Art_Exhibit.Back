@@ -13,7 +13,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Services
         Task<EnchereDTO?> GetEnchereByIdAsync(int id);
 
         Task<EnchereDTO?> AddEnchereAsync(CreateEnchereDTO EnchereDTO);
-        Task UpdateEnchereAsync(CreateEnchereDTO EnchereDTO);
+        Task UpdateEnchereAsync(EnchereDTO EnchereDTO);
         Task DeleteEnchereAsync(int id);
     }
 }

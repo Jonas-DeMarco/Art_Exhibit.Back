@@ -58,6 +58,11 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(oe => oe.Id == id);
         }
 
+        public async Task<Statut?> GetStatutAsync(string stat)
+        {
+            return await _context.Status.AsNoTracking().FirstOrDefaultAsync(s => s.Stat == stat);
+        }
+
         public async Task UpdateAsync(Oeuvre Oeuvre)
         {
             _context.Oeuvres.Update(Oeuvre);

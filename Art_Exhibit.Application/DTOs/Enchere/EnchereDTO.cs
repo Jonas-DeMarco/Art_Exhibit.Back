@@ -12,7 +12,7 @@ namespace Art_Exhibit.Back.Application.DTOs.Enchere
         public DateTime Date_debut { get; set; }
         public DateTime Date_fin { get; set; }
 
-        public OeuvreEnchereDTO OeuvreDTO { get; set; }
+        public int OeuvreId { get; set; }
         public float Prix_reserve { get; set; }
         public float Incr_mini { get; set; }
         public int Duree_antisniping { get; set; }

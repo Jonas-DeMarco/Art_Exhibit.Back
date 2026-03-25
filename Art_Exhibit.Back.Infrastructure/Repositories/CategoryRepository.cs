@@ -20,5 +20,10 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
         {
             return await _context.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.Cat == categoryId);
         }
+
+         public async Task<IEnumerable<Categorie?>> GetAllAsync()
+        {
+            return await _context.Categories.AsNoTracking().ToListAsync();
+        }
     }
 }

@@ -61,5 +61,16 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
         {
             return await _context.TypeUsers.AsNoTracking().ToListAsync();
         }
+
+        public async Task<Users?> GetByUsernameAsync(string username)
+        {
+            return await _context.Users.Include(u => u.Type).AsNoTracking().FirstOrDefaultAsync(usr => usr.Username == username);
+        }
+
+       public async Task<IEnumerable<Users>> GetAllArtistsAsync()
+        {
+            return await _context.Users.Include(u => u.Type).AsNoTracking().Where(usr => usr.Type.Description == "Artiste").ToListAsync();
+
+        }
     }
 }

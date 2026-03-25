@@ -8,5 +8,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
     public interface ICategoryRepository
     {
         Task <Categorie ?> GetAsync (string categoryId);
+
+        Task<IEnumerable<Categorie?>> GetAllAsync();
     }
 }

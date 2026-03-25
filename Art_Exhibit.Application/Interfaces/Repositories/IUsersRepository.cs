@@ -11,6 +11,8 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
 
         Task<Users?> GetByIdAsync(int id);
 
+        Task<Users?> GetByUsernameAsync(string username);
+
         Task<Users?> AddAsync(Users user);
 
         Task UpdateAsync (Users user);
@@ -20,6 +22,8 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
         Task<TypeUser> GetTypeAsync(string type);
 
         Task<IEnumerable<TypeUser>> GetAllTypeAsync();
+
+        Task<IEnumerable<Users>> GetAllArtistsAsync();
 
     }
 }

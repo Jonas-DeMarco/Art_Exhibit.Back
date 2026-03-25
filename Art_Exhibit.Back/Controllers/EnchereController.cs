@@ -35,7 +35,7 @@ namespace Art_Exhibit.Back.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(CreateEnchereDTO enchereDTO)
+        public async Task<IActionResult> Put(EnchereDTO enchereDTO)
         {
             await _enchereServices.UpdateEnchereAsync(enchereDTO);
             return Ok(enchereDTO);

@@ -22,25 +22,12 @@ namespace Art_Exhibit.Back.Application.Services
 
         private EnchereDTO MapToDTO(Enchere enchere)
         {
-            var oeuvre = new OeuvreEnchereDTO
-            {
-                Auteur_Username = enchere.Oeuvre.Auteur.Username,
-                Categorie_Cat = enchere.Oeuvre.Categorie.Cat,
-                Exemplaire = enchere.Oeuvre.Exemplaire,
-                Nbre_exemplaire = enchere.Oeuvre.Nbre_exemplaire,
-                IsAuthentified = enchere.Oeuvre.IsAuthentified,
-                Titre = enchere.Oeuvre.Titre,
-                Description = enchere.Oeuvre.Description,
-                Longueur = enchere.Oeuvre.Longueur,
-                Largeur = enchere.Oeuvre.Largeur,
-                Profondeur = enchere.Oeuvre.Profondeur
-            };
             return new EnchereDTO 
             { 
                 Id = enchere.Id,
                 Date_debut = enchere.Date_debut,
                 Date_fin = enchere.Date_fin,
-                OeuvreDTO = oeuvre,
+                OeuvreId = enchere.Oeuvre.Id,
                 Prix_reserve = enchere.Prix_reserve,
                 Incr_mini = enchere.Incr_mini,
                 Duree_antisniping = enchere.Duree_antisniping
@@ -50,12 +37,11 @@ namespace Art_Exhibit.Back.Application.Services
         {
             var Oeuvre = await _oeuvreRepository.GetByIdAsync(EnchereDTO.Oeuvreid);
             if (Oeuvre == null) throw new Exception("Work not found");
-
+            if (EnchereDTO.Date_fin == null) EnchereDTO.Date_fin = EnchereDTO.Date_debut.AddDays(30);
             var Enchere = new Enchere
             {
-                Id = EnchereDTO.Id,
                 Date_debut = EnchereDTO.Date_debut,
-                Date_fin = EnchereDTO.Date_fin,
+                Date_fin = EnchereDTO.Date_fin.Value,
                 Oeuvre = Oeuvre,
                 Prix_reserve = EnchereDTO.Prix_reserve,
                 Incr_mini = EnchereDTO.Incr_mini,
@@ -86,11 +72,11 @@ namespace Art_Exhibit.Back.Application.Services
             return MapToDTO(enchere);
         }
 
-        public async Task UpdateEnchereAsync(CreateEnchereDTO EnchereDTO)
+        public async Task UpdateEnchereAsync(EnchereDTO EnchereDTO)
         {
             var enchere = await _repository.GetByIdAsync(EnchereDTO.Id);
             if (enchere == null) throw new Exception("Auction not found");
-            var Oeuvre = await _oeuvreRepository.GetByIdAsync(EnchereDTO.Oeuvreid);
+            var Oeuvre = await _oeuvreRepository.GetByIdAsync(EnchereDTO.OeuvreId);
             if (Oeuvre == null) throw new Exception("Work not found");
             enchere.Id = EnchereDTO.Id;
             enchere.Date_debut = EnchereDTO.Date_debut;

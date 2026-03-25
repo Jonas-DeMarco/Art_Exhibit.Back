@@ -3,6 +3,7 @@ using System;
 using Art_Exhibit.Back.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260325124636_unique_constraint_on_username")]
+    partial class unique_constraint_on_username
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -25,24 +28,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                     b.HasKey("Cat");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Cat = "Painting"
-                        },
-                        new
-                        {
-                            Cat = "Sculpture"
-                        },
-                        new
-                        {
-                            Cat = "Print"
-                        },
-                        new
-                        {
-                            Cat = "Other"
-                        });
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Enchere", b =>
@@ -92,6 +77,9 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Exemplaire")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsAuthentified")
                         .HasColumnType("INTEGER");
 
@@ -100,6 +88,9 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 
                     b.Property<float>("Longueur")
                         .HasColumnType("REAL");
+
+                    b.Property<int>("Nbre_exemplaire")
+                        .HasColumnType("INTEGER");
 
                     b.Property<float>("Profondeur")
                         .HasColumnType("REAL");
@@ -167,10 +158,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                         new
                         {
                             Stat = "Refused"
-                        },
-                        new
-                        {
-                            Stat = "Accepted"
                         },
                         new
                         {

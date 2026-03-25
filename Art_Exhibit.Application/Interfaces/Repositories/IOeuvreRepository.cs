@@ -16,5 +16,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
         Task UpdateAsync(Oeuvre Oeuvre);
 
         Task DeleteAsync(int Id);
+
+        Task<Statut> GetStatutAsync(string stat);
     }
 }

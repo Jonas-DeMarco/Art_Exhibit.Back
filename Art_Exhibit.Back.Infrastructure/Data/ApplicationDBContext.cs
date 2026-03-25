@@ -17,6 +17,10 @@ namespace Art_Exhibit.Back.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            //set unique constraint
+            modelBuilder.Entity<Users>()
+                .HasIndex(u => u.Username).IsUnique();
+
             //seed DB
             modelBuilder.Entity<TypeUser>().HasData(
                 new TypeUser { ID = 1, Description = "User"},
@@ -28,10 +32,19 @@ namespace Art_Exhibit.Back.Infrastructure.Data
             modelBuilder.Entity<Statut>().HasData(
                 new Statut { Stat = "Waiting"},
                 new Statut { Stat = "Refused" },
+                new Statut { Stat = "Accepted" },
                 new Statut { Stat = "Up for Auction" },
                 new Statut { Stat = "Sold" }
             );
-           
+
+            modelBuilder.Entity<Categorie>().HasData(
+                new Categorie { Cat = "Painting" },
+                new Categorie { Cat = "Sculpture" },
+                new Categorie { Cat = "Print" },
+                new Categorie { Cat = "Other" }
+                
+            );
+            
 
 
         }

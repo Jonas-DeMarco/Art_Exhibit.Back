@@ -14,5 +14,8 @@ namespace Art_Exhibit.Back.Application.Interfaces.Services
         Task<OeuvreDTO?> AddOeuvreAsync(CreateOeuvreDTO OeuvreDTO);
         Task UpdateOeuvreAsync(OeuvreDTO OeuvreDTO);
         Task DeleteOeuvreAsync(int id);
+
+
+        Task<IEnumerable<string>> GetCategoriesAsync();
     }
 }

@@ -25,46 +25,44 @@ namespace Art_Exhibit.Back.Application.Services
             return new OeuvreDTO
             {
                 Id = oeuvre.Id,
-                Auteur = oeuvre.Auteur,
-                Categorie = oeuvre.Categorie,
-                Exemplaire = oeuvre.Exemplaire,
-                Nbre_exemplaire = oeuvre.Nbre_exemplaire,
+                Auteur = oeuvre.Auteur.Username,
+                Categorie = oeuvre.Categorie.Cat,
                 IsAuthentified = oeuvre.IsAuthentified,
                 Titre = oeuvre.Titre,
                 Description = oeuvre.Description,
                 Longueur = oeuvre.Longueur,
                 Largeur = oeuvre.Largeur,
                 Profondeur = oeuvre.Profondeur,
-                Statut = oeuvre.Statut
+                Statut = oeuvre.Statut.Stat
             };
         }
 
         
         public async Task<OeuvreDTO?> AddOeuvreAsync(CreateOeuvreDTO OeuvreDTO)
         {
-            var auteur = await _usersRepository.GetByIdAsync(OeuvreDTO.Auteur.Id);
+            var auteur = await _usersRepository.GetByUsernameAsync(OeuvreDTO.Auteur_username);
             if (auteur == null) throw new Exception("Author not found");
                 
             var categorie = await _categoryRepository.GetAsync(OeuvreDTO.Categorie);
             if (categorie == null) throw new Exception("category not found");
 
+           
             var oeuvre = new Oeuvre
             {
-                Id = OeuvreDTO.Id,
+                Id = 0,
                 Auteur = auteur,
                 Categorie = categorie,
-                Exemplaire = OeuvreDTO.Exemplaire,
-                Nbre_exemplaire = OeuvreDTO.Nbre_exemplaire,
                 IsAuthentified = false,
                 Titre = OeuvreDTO.Titre,
                 Description = OeuvreDTO.Description,
                 Longueur = OeuvreDTO.Longueur,
                 Largeur = OeuvreDTO.Largeur,
                 Profondeur = OeuvreDTO.Profondeur,
-                Statut = new Statut { Stat = "Waiting"}
+                Statut = new Statut { Stat = "Waiting" }
             };
             var newoeuvre = await _repository.AddAsync(oeuvre);
-            if (newoeuvre != null) return MapToDTO(newoeuvre);
+            
+            
             return null;
         }
 
@@ -95,20 +93,42 @@ namespace Art_Exhibit.Back.Application.Services
         {
             var oeuvre = await _repository.GetByIdAsync(OeuvreDTO.Id);
             if (oeuvre == null) throw new Exception("Work not found");
+
+            var auteur = await _usersRepository.GetByUsernameAsync(OeuvreDTO.Auteur);
+            if (auteur == null) throw new Exception("Author not found");
+
+            var categorie = await _categoryRepository.GetAsync(OeuvreDTO.Categorie);
+            if (categorie == null) throw new Exception("category not found");
+
+            var statut = await _repository.GetStatutAsync(OeuvreDTO.Statut);
+            if (statut == null) throw new Exception("Inexisting status");
+
+
             oeuvre.Id = OeuvreDTO.Id;
-            oeuvre.Auteur = OeuvreDTO.Auteur;
-            oeuvre.Categorie = OeuvreDTO.Categorie;
-            oeuvre.Exemplaire = OeuvreDTO.Exemplaire;
-            oeuvre.Nbre_exemplaire = OeuvreDTO.Nbre_exemplaire;
+            oeuvre.Auteur = auteur;
+            oeuvre.Categorie = categorie;
             oeuvre.IsAuthentified = OeuvreDTO.IsAuthentified;
             oeuvre.Titre = OeuvreDTO.Titre;
             oeuvre.Description = OeuvreDTO.Description;
             oeuvre.Longueur = OeuvreDTO.Longueur;
             oeuvre.Largeur = OeuvreDTO.Largeur;
             oeuvre.Profondeur = OeuvreDTO.Profondeur;
-            oeuvre.Statut = OeuvreDTO.Statut;
+            oeuvre.Statut = statut;
 
             await _repository.UpdateAsync(oeuvre);
+        }
+
+
+        public async Task<IEnumerable<string>> GetCategoriesAsync()
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+            var categorylist = new List<string>();
+            foreach (var category in categories)
+            {
+                categorylist.Add(category.Cat);
+            }
+            return categorylist;
+
         }
     }
 }
