@@ -3,6 +3,7 @@ using System;
 using Art_Exhibit.Back.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260315193733_add_bids")]
+    partial class add_bids
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -145,25 +148,7 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 
                     b.HasKey("Stat");
 
-                    b.ToTable("Status");
-
-                    b.HasData(
-                        new
-                        {
-                            Stat = "Waiting"
-                        },
-                        new
-                        {
-                            Stat = "Refused"
-                        },
-                        new
-                        {
-                            Stat = "Up for Auction"
-                        },
-                        new
-                        {
-                            Stat = "Sold"
-                        });
+                    b.ToTable("Statuts");
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.TypeUser", b =>
@@ -179,28 +164,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("TypeUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Description = "User"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Description = "Artiste"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Description = "Admin"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Description = "Banned"
-                        });
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Users", b =>

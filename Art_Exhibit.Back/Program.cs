@@ -35,6 +35,7 @@ builder.Services
     .AddDefaultTokenProviders();
 
 
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -65,9 +66,17 @@ builder.Services.AddAuthorization();
 //users
 builder.Services.AddScoped<IUsersRepository, UserRepository>();
 builder.Services.AddScoped<IUsersServices, UsersServices>();
-//typeusers
-builder.Services.AddScoped<ITypeUserServices,TypeUserServices>();
-builder.Services.AddScoped<ITypeUserRepository, TypeUserRepository>();
+//Oeuvre
+builder.Services.AddScoped<IOeuvreServices, OeuvreServices>();
+builder.Services.AddScoped<IOeuvreRepository, OeuvreRepository>();
+//Categories
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//Encheres
+builder.Services.AddScoped<IEnchereServices, EnchereServices>();
+builder.Services.AddScoped<IEnchereRepository, EnchereRepository>();
+//Offre
+builder.Services.AddScoped<IOffreServices, OffreServices>();
+builder.Services.AddScoped<IOffreRepository, OffreRepository>();
 
 
 
@@ -100,8 +109,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-
-app.UseAuthorization();
 
 app.UseCors("AllowBlazor");
 

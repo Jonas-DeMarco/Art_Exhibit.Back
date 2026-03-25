@@ -19,6 +19,10 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
 
         public async Task<Oeuvre?> AddAsync(Oeuvre Oeuvre)
         {
+            
+            _context.Attach(Oeuvre.Categorie);
+            _context.Attach(Oeuvre.Statut);
+            _context.Attach(Oeuvre.Auteur);
             await _context.AddAsync(Oeuvre);
             await _context.SaveChangesAsync();
             return Oeuvre;
@@ -36,12 +40,22 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
 
         public async Task<IEnumerable<Oeuvre>> GetAllAsync()
         {
-            return await _context.Oeuvres.AsNoTracking().ToListAsync();
+            return await _context.Oeuvres
+                .Include(o => o.Categorie)
+                .Include(o => o.Statut)
+                .Include(o=> o.Auteur)
+                .Include(o=> o.Auteur.Type)
+                .AsNoTracking().ToListAsync();
         }
 
         public async Task<Oeuvre?> GetByIdAsync(int id)
         {
-            return await _context.Oeuvres.AsNoTracking().FirstOrDefaultAsync(oe => oe.Id == id);
+            return await _context.Oeuvres
+                .Include(o => o.Categorie)
+                .Include(o => o.Statut)
+                .Include(o => o.Auteur)
+                .Include(o => o.Auteur.Type)
+                .AsNoTracking().FirstOrDefaultAsync(oe => oe.Id == id);
         }
 
         public async Task UpdateAsync(Oeuvre Oeuvre)
@@ -49,5 +63,7 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
             _context.Oeuvres.Update(Oeuvre);
             await _context.SaveChangesAsync();
         }
+
+      
     }
 }

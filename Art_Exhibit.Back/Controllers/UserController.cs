@@ -2,6 +2,7 @@
 using Art_Exhibit.Back.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace Art_Exhibit.Back.API.Controllers
 {
@@ -47,6 +48,14 @@ namespace Art_Exhibit.Back.API.Controllers
         {
             await _usersServices.DeleteUserAsync(id);
             return Ok();
+        }
+
+        [Route("/api/gettypes")]
+        [HttpGet]
+        public async Task<IActionResult> GetTypes()
+        {
+           var typelist =  await _usersServices.GetTypeListAsync();
+            return Ok(typelist);
         }
 
         /*

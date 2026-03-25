@@ -30,6 +30,7 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
 
         public async Task<Users?> AddAsync(Users user)
         {
+            _context.Attach(user.Type);
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
@@ -49,6 +50,16 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<TypeUser> GetTypeAsync(string  type)
+        {
+           return await _context.TypeUsers.AsNoTracking().FirstOrDefaultAsync(t => t.Description == type);
+        }
+
+        public async Task<IEnumerable<TypeUser>> GetAllTypeAsync()
+        {
+            return await _context.TypeUsers.AsNoTracking().ToListAsync();
         }
     }
 }

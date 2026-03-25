@@ -11,9 +11,13 @@ namespace Art_Exhibit.Back.Application.Services
     public class OeuvreServices:IOeuvreServices
     {
         private readonly IOeuvreRepository _repository;
-        public OeuvreServices(IOeuvreRepository repository)
+        private readonly IUsersRepository _usersRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        public OeuvreServices(IOeuvreRepository repository, IUsersRepository usersRepository, ICategoryRepository categoryRepository)
         {
             _repository = repository;
+            _usersRepository = usersRepository;
+            _categoryRepository = categoryRepository;
         }
 
         private OeuvreDTO MapToDTO(Oeuvre oeuvre)
@@ -38,11 +42,17 @@ namespace Art_Exhibit.Back.Application.Services
         
         public async Task<OeuvreDTO?> AddOeuvreAsync(CreateOeuvreDTO OeuvreDTO)
         {
+            var auteur = await _usersRepository.GetByIdAsync(OeuvreDTO.Auteur.Id);
+            if (auteur == null) throw new Exception("Author not found");
+                
+            var categorie = await _categoryRepository.GetAsync(OeuvreDTO.Categorie);
+            if (categorie == null) throw new Exception("category not found");
+
             var oeuvre = new Oeuvre
             {
                 Id = OeuvreDTO.Id,
-                Auteur = OeuvreDTO.Auteur,
-                Categorie = OeuvreDTO.Categorie,
+                Auteur = auteur,
+                Categorie = categorie,
                 Exemplaire = OeuvreDTO.Exemplaire,
                 Nbre_exemplaire = OeuvreDTO.Nbre_exemplaire,
                 IsAuthentified = false,
@@ -97,6 +107,8 @@ namespace Art_Exhibit.Back.Application.Services
             oeuvre.Largeur = OeuvreDTO.Largeur;
             oeuvre.Profondeur = OeuvreDTO.Profondeur;
             oeuvre.Statut = OeuvreDTO.Statut;
+
+            await _repository.UpdateAsync(oeuvre);
         }
     }
 }

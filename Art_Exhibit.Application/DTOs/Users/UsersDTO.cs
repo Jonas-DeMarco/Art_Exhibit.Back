@@ -8,7 +8,7 @@ namespace Art_Exhibit.Back.Application.DTOs.Users
     public class UsersDTO
     {
         public int Id { get; set; }
-        public TypeUser Type { get; set; } 
+        public string Type { get; set; } 
 
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

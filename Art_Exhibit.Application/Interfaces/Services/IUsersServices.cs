@@ -15,5 +15,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Services
         Task UpdateUserAsync(UpdateUsersDTO usersDTO);
         Task DeleteUserAsync(int id);
 
+        Task<IEnumerable<string>> GetTypeListAsync();
+
     }
 }

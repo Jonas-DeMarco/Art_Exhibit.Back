@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Art_Exhibit.Back.Application.Interfaces.Repositories
 {
-    public interface ICategorieRepository
+    public interface ICategoryRepository
     {
-        Task<IEnumerable<Categorie>> GetAllAsync();
-        Task<Categorie?> GetByCatAsync(string Cat);
+        Task <Categorie ?> GetAsync (string categoryId);
     }
 }

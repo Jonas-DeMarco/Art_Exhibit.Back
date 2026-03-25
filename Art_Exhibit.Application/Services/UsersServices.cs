@@ -11,7 +11,7 @@ namespace Art_Exhibit.Back.Application.Services
     public class UsersServices : IUsersServices
     {
         private readonly IUsersRepository _repository;
-
+        
         public UsersServices(IUsersRepository repository)
         {
             _repository = repository; 
@@ -22,7 +22,7 @@ namespace Art_Exhibit.Back.Application.Services
             return new UsersDTO
             {
                 Id = user.Id,
-                Type = user.Type,
+                Type = user.Type.Description,
                 Username = user.Username,
                 Password = user.Password,
                 Email = user.Email
@@ -49,10 +49,11 @@ namespace Art_Exhibit.Back.Application.Services
 
         public async Task<UsersDTO?> AddUserAsync(CreateUsersDTO usersDTO)
         {
+            var type = await _repository.GetTypeAsync(usersDTO.Type);
             var user = new Users
             {
-                Id = usersDTO.Id,
-                Type = usersDTO.Type,
+                Id = 0,
+                Type = type,
                 Username = usersDTO.Username,
                 Password = usersDTO.Password,
                 Email = usersDTO.Email
@@ -76,6 +77,16 @@ namespace Art_Exhibit.Back.Application.Services
         public async Task DeleteUserAsync(int id)
         {
             await _repository.DeleteAsync(id);
+        }
+        public async Task<IEnumerable<string>> GetTypeListAsync()
+        {
+            var types = await _repository.GetAllTypeAsync();
+            var typelist = new List<string>();
+            foreach (var type in types)
+            {
+                typelist.Add(type.Description);   
+            }
+            return typelist;
         }
     }
 }

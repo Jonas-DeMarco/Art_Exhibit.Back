@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Art_Exhibit.Back.Domain.Entities
 {
-    public class Statut
+    internal class Vente
     {
-        [Key]
-        public string Stat {  get; set; }
     }
 }

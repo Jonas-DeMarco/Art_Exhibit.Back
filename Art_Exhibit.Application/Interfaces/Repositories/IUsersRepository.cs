@@ -15,7 +15,11 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
 
         Task UpdateAsync (Users user);
 
-        Task DeleteAsync(int Id);   
+        Task DeleteAsync(int Id);
+
+        Task<TypeUser> GetTypeAsync(string type);
+
+        Task<IEnumerable<TypeUser>> GetAllTypeAsync();
 
     }
 }

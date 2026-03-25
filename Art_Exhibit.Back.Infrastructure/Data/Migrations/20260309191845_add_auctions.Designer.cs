@@ -3,6 +3,7 @@ using System;
 using Art_Exhibit.Back.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260309191845_add_auctions")]
+    partial class add_auctions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -111,33 +114,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                     b.ToTable("Oeuvres");
                 });
 
-            modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Offre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BidderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EnchereId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("REAL");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BidderId");
-
-                    b.HasIndex("EnchereId");
-
-                    b.ToTable("Offres");
-                });
-
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Statut", b =>
                 {
                     b.Property<string>("Stat")
@@ -145,25 +121,7 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 
                     b.HasKey("Stat");
 
-                    b.ToTable("Status");
-
-                    b.HasData(
-                        new
-                        {
-                            Stat = "Waiting"
-                        },
-                        new
-                        {
-                            Stat = "Refused"
-                        },
-                        new
-                        {
-                            Stat = "Up for Auction"
-                        },
-                        new
-                        {
-                            Stat = "Sold"
-                        });
+                    b.ToTable("Statuts");
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.TypeUser", b =>
@@ -179,28 +137,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("TypeUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Description = "User"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Description = "Artiste"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Description = "Admin"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Description = "Banned"
-                        });
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Users", b =>
@@ -457,25 +393,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                     b.Navigation("Categorie");
 
                     b.Navigation("Statut");
-                });
-
-            modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Offre", b =>
-                {
-                    b.HasOne("Art_Exhibit.Back.Domain.Entities.Users", "Bidder")
-                        .WithMany()
-                        .HasForeignKey("BidderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Art_Exhibit.Back.Domain.Entities.Enchere", "Enchere")
-                        .WithMany()
-                        .HasForeignKey("EnchereId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bidder");
-
-                    b.Navigation("Enchere");
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Users", b =>
