@@ -16,5 +16,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
         Task UpdateAsync(Enchere Enchere);
 
         Task DeleteAsync(int Id);
+
+        Task<Enchere?> GetByArtworkIdAsync(int id);
     }
 }

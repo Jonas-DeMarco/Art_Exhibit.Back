@@ -42,5 +42,24 @@ namespace Art_Exhibit.Back.API.Controllers
             await _offreServices.DeleteOffreAsync(id);
             return Ok();
         }
+
+
+        [Route("lastbid/{id:int}")]
+        [HttpGet]
+        public async Task<IActionResult> GetLastBid(int id)
+        {
+            var result = await _offreServices.GetLastBidAsync(id);
+            if(result == null) result = new OffreDTO();
+            return Ok(result);
+        }
+
+        [Route("bids/{id:int}")]
+        [HttpGet]
+        public async Task<IActionResult> GetBids(int id)
+        {
+            var result = await _offreServices.GetBidsAsync(id);
+            if (result == null) result = Array.Empty<OffreDTO>();
+            return Ok(result);
+        }
     }
 }

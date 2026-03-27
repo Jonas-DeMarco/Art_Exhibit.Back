@@ -87,5 +87,12 @@ namespace Art_Exhibit.Back.Application.Services
             enchere.Duree_antisniping = EnchereDTO.Duree_antisniping;
             await _repository.UpdateAsync(enchere);
         }
+
+        public async Task<EnchereDTO?> GetEnchereByArtworkAsync(int id)
+        {
+            var enchere = await _repository.GetByArtworkIdAsync(id);
+            if (enchere == null) return null;
+            return MapToDTO(enchere);
+        }
     }
 }

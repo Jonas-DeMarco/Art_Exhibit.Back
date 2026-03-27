@@ -46,9 +46,20 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
 
         public async Task<Offre?> GetByIdAsync(int id)
         {
-            return await _context.Offres.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.Offres.AsNoTracking()
+                .Include(o => o.Bidder)
+                .Include(o => o.Enchere)
+                .FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        
+        public async Task<IEnumerable<Offre?>> GetBidsAsync(int enchereid)
+        {
+            return await _context.Offres.AsNoTracking()
+                .Include(o => o.Bidder)
+                .Include(o => o.Enchere)
+                .Where(o => o.Enchere.Id == enchereid).OrderByDescending(o=> o.Price).ToListAsync();
+        }
+
+
     }
 }

@@ -28,8 +28,8 @@ namespace Art_Exhibit.Back.Application.Services
             return new OffreDTO
             {
                 Id = offre.Id,
-                Bidder = offre.Bidder,
-                Enchere = offre.Enchere,
+                BidderId = offre.Bidder.Id,
+                EnchereId = offre.Enchere.Id,
                 Price = offre.Price,
                 Timestamp = offre.Timestamp
             };
@@ -43,9 +43,11 @@ namespace Art_Exhibit.Back.Application.Services
             var enchere = await _enchereRepository.GetByIdAsync(OffreDTO.Enchere_Id);
             if (enchere == null) throw new Exception("Auction not found");
 
+            if (enchere.Oeuvre.Auteur.Id == bidder.Id) throw new Exception("Can't bid on your own work");
+
             var offre = new Offre
             {
-                Id = OffreDTO.Id,
+                Id = 0,
                 Bidder = bidder,
                 Enchere = enchere,
                 Timestamp = OffreDTO.Timestamp,
@@ -74,6 +76,30 @@ namespace Art_Exhibit.Back.Application.Services
             var offre = await _repository.GetByIdAsync(id);
             if (offre == null) return null;
             return MaptoDTO(offre);
+        }
+
+        public async Task<OffreDTO?> GetLastBidAsync(int enchereid)
+        {
+            var offres = await _repository.GetBidsAsync(enchereid);
+            if (offres != null && offres.Count()>0)
+            {
+                Offre maxbid = new Offre();
+                foreach (var offre in offres)
+                {
+                    if (offre.Price > maxbid.Price) maxbid = offre;
+                }
+                return MaptoDTO(maxbid);
+            }
+            return null;
+        }
+
+
+        public async Task<IEnumerable<OffreDTO?>> GetBidsAsync(int enchereid)
+        {
+            var offre = await _repository.GetBidsAsync(enchereid);
+            var dtos = new List<OffreDTO>();
+            foreach (var o in offre) dtos.Add(MaptoDTO(o));
+            return dtos;
         }
     }
 }

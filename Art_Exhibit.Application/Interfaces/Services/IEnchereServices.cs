@@ -15,5 +15,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Services
         Task<EnchereDTO?> AddEnchereAsync(CreateEnchereDTO EnchereDTO);
         Task UpdateEnchereAsync(EnchereDTO EnchereDTO);
         Task DeleteEnchereAsync(int id);
+
+        Task<EnchereDTO?> GetEnchereByArtworkAsync(int id);
     }
 }

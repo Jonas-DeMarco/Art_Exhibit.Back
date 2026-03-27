@@ -25,7 +25,10 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
 
         public async Task<Users?> GetByIdAsync(int id)
         {
-            return await _context.Users.Include(u => u.Type).AsNoTracking().FirstOrDefaultAsync(usr => usr.Id == id);
+            return await _context.Users
+                .AsNoTracking()
+                .Include(u => u.Type)
+                .FirstOrDefaultAsync(usr => usr.Id == id);
         }
 
         public async Task<Users?> AddAsync(Users user)
@@ -72,5 +75,7 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
             return await _context.Users.Include(u => u.Type).AsNoTracking().Where(usr => usr.Type.Description == "Artiste").ToListAsync();
 
         }
+
+       
     }
 }

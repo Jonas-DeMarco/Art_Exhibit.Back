@@ -14,5 +14,7 @@ namespace Art_Exhibit.Back.Application.Interfaces.Repositories
         Task<Offre?> AddAsync(Offre Offre);
 
         Task DeleteAsync(int Id);
+
+        Task<IEnumerable<Offre?>> GetBidsAsync(int enchereid);
     }
 }

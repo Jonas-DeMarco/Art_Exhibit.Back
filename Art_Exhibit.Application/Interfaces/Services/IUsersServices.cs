@@ -21,6 +21,8 @@ namespace Art_Exhibit.Back.Application.Interfaces.Services
 
         Task<IEnumerable<string>> GetArtistsListAsync();
 
+        Task<IEnumerable<string>> GetAllUsernameAsync();
+
 
     }
 }

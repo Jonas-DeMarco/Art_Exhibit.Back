@@ -22,7 +22,7 @@ namespace Art_Exhibit.Back.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetOeuvreByIdAsync(int id)
+        public async Task<IActionResult> GetEnchereByIdAsync(int id)
         {
             return Ok(await _enchereServices.GetEnchereByIdAsync(id));
         }
@@ -46,6 +46,16 @@ namespace Art_Exhibit.Back.API.Controllers
         {
             await _enchereServices.DeleteEnchereAsync(id);
             return Ok();
+        }
+
+        [Route("getfromartwork/{id:int}")]
+        [HttpGet]
+        public async Task<IActionResult> GetEnchereByArtworkAsync(int id)
+        {
+
+            var result = await _enchereServices.GetEnchereByArtworkAsync(id);
+            if (result == null) result = new EnchereDTO();
+            return Ok(result);
         }
     }
 }

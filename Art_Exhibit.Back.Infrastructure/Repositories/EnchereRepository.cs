@@ -46,13 +46,27 @@ namespace Art_Exhibit.Back.Infrastructure.Repositories
 
         public async Task<Enchere?> GetByIdAsync(int id)
         {
-            return await _context.Encheres.AsNoTracking().FirstOrDefaultAsync(e  => e.Id == id);
+            return await _context.Encheres
+                .Include(o => o.Oeuvre)
+                .Include(o => o.Oeuvre.Auteur)
+                .Include(o => o.Oeuvre.Categorie)
+                .AsNoTracking().FirstOrDefaultAsync(e  => e.Id == id);
         }
 
-        public Task UpdateAsync(Enchere Enchere)
+        public async Task UpdateAsync(Enchere Enchere)
         {
             _context.Encheres.Update(Enchere);
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Enchere?> GetByArtworkIdAsync(int id)
+        {
+            return await _context.Encheres
+                .AsNoTracking()
+                .Include(o => o.Oeuvre)
+                .Include(o => o.Oeuvre.Auteur)
+                .Include(o => o.Oeuvre.Categorie)
+                .Where( e => e.Date_fin >= DateTime.Now).FirstOrDefaultAsync(e => e.Oeuvre.Id == id);
         }
     }
 }

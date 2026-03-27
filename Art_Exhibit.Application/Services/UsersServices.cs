@@ -107,5 +107,15 @@ namespace Art_Exhibit.Back.Application.Services
             if (user == null) return null;
             return MapToDTO(user);
         }
+        public async Task<IEnumerable<string>> GetAllUsernameAsync()
+        {
+            var users = await _repository.GetAllAsync();
+            var usernamelist = new List<string>();
+            foreach (var user in users)
+            {
+                usernamelist.Add(user.Username);
+            }
+            return usernamelist;
+        }
     }
 }

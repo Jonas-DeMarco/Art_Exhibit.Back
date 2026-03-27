@@ -14,5 +14,9 @@ namespace Art_Exhibit.Back.Application.Interfaces.Services
 
         Task<OffreDTO?> AddOffreAsync(CreateOffreDTO OffreDTO);
         Task DeleteOffreAsync(int id);
+
+
+        Task<OffreDTO?> GetLastBidAsync(int enchereid);
+        Task<IEnumerable<OffreDTO?>> GetBidsAsync(int enchereid);
     }
 }

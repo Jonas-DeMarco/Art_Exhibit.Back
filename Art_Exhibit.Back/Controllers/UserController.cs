@@ -72,6 +72,14 @@ namespace Art_Exhibit.Back.API.Controllers
             return Ok(artistlist);
         }
 
+        [Route("/api/getusernames")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsername()
+        {
+            var usernamelist = await _usersServices.GetAllUsernameAsync();
+            return Ok(usernamelist);
+        }
+
         /*
        
         Task UpdateUserAsync(UpdateUsersDTO usersDTO);

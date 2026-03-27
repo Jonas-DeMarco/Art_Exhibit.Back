@@ -3,6 +3,7 @@ using System;
 using Art_Exhibit.Back.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260327192103_seeding_users")]
+    partial class seeding_users
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -121,86 +124,6 @@ namespace Art_Exhibit.Back.Infrastructure.Data.Migrations
                     b.HasIndex("StatutStat");
 
                     b.ToTable("Oeuvres");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AuteurId = 2,
-                            CategorieCat = "Painting",
-                            Description = "A painting of a blue sky",
-                            IsAuthentified = false,
-                            Largeur = 13f,
-                            Longueur = 12f,
-                            Profondeur = 2f,
-                            StatutStat = "Waiting",
-                            Titre = "Blue sky"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AuteurId = 2,
-                            CategorieCat = "Painting",
-                            Description = "a painting of a red sky",
-                            IsAuthentified = false,
-                            Largeur = 32f,
-                            Longueur = 25f,
-                            Profondeur = 2f,
-                            StatutStat = "Waiting",
-                            Titre = "red sky"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AuteurId = 3,
-                            CategorieCat = "Sculpture",
-                            Description = "A sculpture of a man with a Hat",
-                            IsAuthentified = false,
-                            Largeur = 150f,
-                            Longueur = 60f,
-                            Profondeur = 45f,
-                            StatutStat = "Waiting",
-                            Titre = "The Man"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AuteurId = 3,
-                            CategorieCat = "Sculpture",
-                            Description = "A sculpture of a robot with a Hat",
-                            IsAuthentified = false,
-                            Largeur = 45f,
-                            Longueur = 150f,
-                            Profondeur = 60f,
-                            StatutStat = "Waiting",
-                            Titre = "The Machine"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AuteurId = 4,
-                            CategorieCat = "Print",
-                            Description = "A printed copy of a digital art of my wife",
-                            IsAuthentified = false,
-                            Largeur = 24f,
-                            Longueur = 24f,
-                            Profondeur = 1f,
-                            StatutStat = "Waiting",
-                            Titre = "Love of my life"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            AuteurId = 4,
-                            CategorieCat = "Other",
-                            Description = "A smile with a pretty face",
-                            IsAuthentified = false,
-                            Largeur = 234f,
-                            Longueur = 24f,
-                            Profondeur = 1222f,
-                            StatutStat = "Waiting",
-                            Titre = "A smile with a pretty face"
-                        });
                 });
 
             modelBuilder.Entity("Art_Exhibit.Back.Domain.Entities.Offre", b =>
